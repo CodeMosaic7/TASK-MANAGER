@@ -1,6 +1,6 @@
-import {React,useEffect,useState} from 'react'
+import {React, useEffect, useState} from 'react'
 import api from "../api"
-
+import Note from './Note';
 const Home = () => {
   const [notes,setNotes]=useState([]);
   const [content,setContent]=useState("")
@@ -20,8 +20,9 @@ const Home = () => {
     .then((res)=>{
       if (res.status===204) alert("Note Deleted!")
         else alert("Failed to delete note")
+        getNotes();
     }).catch((e)=>alert(error))
-    getNotes();
+    
   }
 
   const createNote=(e)=>{
@@ -36,6 +37,7 @@ const Home = () => {
   return (
     <div>
       <h2>Notes</h2>
+      {notes.map((note)=><Note note={note} onDelete={deleteNote} key={note.id}/>)}
       <h2>Create a Note</h2>
       <form onSubmit={createNote}>
         <label htmlFor="title">Title:</label>
